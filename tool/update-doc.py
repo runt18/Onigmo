@@ -45,7 +45,9 @@ def output_categories():
     print_list(sorted(categories), "Major and General Categories")
     return categories
 
-def output_scripts(filename, title, add=[]):
+def output_scripts(filename, title, add=None):
+    if add is None:
+        add = []
     scripts = set(add)
     pattern = re.compile('^.*?; (\w+) # ')
     with open(filename, 'r') as f:
