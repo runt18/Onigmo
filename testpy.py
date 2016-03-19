@@ -100,17 +100,15 @@ def xx(pattern, target, s_from, s_to, mem, not_match,
         onig.onig_error_code_to_str(msg, r, byref(einfo))
         if r == err:
             nsucc += 1
-            print_result("OK(E)", "%s (/%s/ '%s')" % \
-                    (msg.value.decode(), pattern, target))
+            print_result("OK(E)", "{0!s} (/{1!s}/ '{2!s}')".format(msg.value.decode(), pattern, target))
         else:
             nerror += 1
-            print_result("ERROR", "%s (/%s/ '%s')" % \
-                    (msg.value.decode(), pattern, target), file=sys.stderr)
+            print_result("ERROR", "{0!s} (/{1!s}/ '{2!s}')".format(msg.value.decode(), pattern, target), file=sys.stderr)
         return
 
     if err != onig.ONIG_NORMAL:
         nfail += 1
-        print_result("FAIL(E)", "/%s/ '%s'" % (pattern, target))
+        print_result("FAIL(E)", "/{0!s}/ '{1!s}'".format(pattern, target))
         onig.onig_free(reg)
         return
 
@@ -122,35 +120,33 @@ def xx(pattern, target, s_from, s_to, mem, not_match,
         onig.onig_error_code_to_str(msg, r)
         if r == err:
             nsucc += 1
-            print_result("OK(E)", "%s (/%s/ '%s')" % \
-                    (msg.value.decode(), pattern, target))
+            print_result("OK(E)", "{0!s} (/{1!s}/ '{2!s}')".format(msg.value.decode(), pattern, target))
         else:
             nerror += 1
-            print_result("ERROR", "%s (/%s/ '%s')" % \
-                    (msg.value.decode(), pattern, target), file=sys.stderr)
+            print_result("ERROR", "{0!s} (/{1!s}/ '{2!s}')".format(msg.value.decode(), pattern, target), file=sys.stderr)
         onig.onig_region_free(region, 1)
         return
 
     if r == onig.ONIG_MISMATCH:
         if not_match:
             nsucc += 1
-            print_result("OK(N)", "/%s/ '%s'" % (pattern, target))
+            print_result("OK(N)", "/{0!s}/ '{1!s}'".format(pattern, target))
         else:
             nfail += 1
-            print_result("FAIL", "/%s/ '%s'" % (pattern, target))
+            print_result("FAIL", "/{0!s}/ '{1!s}'".format(pattern, target))
     else:
         if not_match:
             nfail += 1
-            print_result("FAIL(N)", "/%s/ '%s'" % (pattern, target))
+            print_result("FAIL(N)", "/{0!s}/ '{1!s}'".format(pattern, target))
         else:
             start = region[0].beg[mem]
             end = region[0].end[mem]
             if (start == s_from) and (end == s_to):
                 nsucc += 1
-                print_result("OK", "/%s/ '%s'" % (pattern, target))
+                print_result("OK", "/{0!s}/ '{1!s}'".format(pattern, target))
             else:
                 nfail += 1
-                print_result("FAIL", "/%s/ '%s' %d-%d : %d-%d" % (pattern, target,
+                print_result("FAIL", "/{0!s}/ '{1!s}' {2:d}-{3:d} : {4:d}-{5:d}".format(pattern, target,
                         s_from, s_to, start, end))
     onig.onig_free(reg)
     onig.onig_region_free(region, 1)
@@ -1304,7 +1300,7 @@ def main():
     x2("\\Q()\\\\E", "()\\", 0, 3, syn=onig.ONIG_SYNTAX_PERL)
 
     print("\nEncoding:", encoding)
-    print("RESULT   SUCC: %d,  FAIL: %d,  ERROR: %d      (by Onigmo %s)" % (
+    print("RESULT   SUCC: {0:d},  FAIL: {1:d},  ERROR: {2:d}      (by Onigmo {3!s})".format(
           nsucc, nfail, nerror, onig.onig_version()))
 
     onig.onig_end()

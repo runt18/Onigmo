@@ -19,8 +19,7 @@ def print_list(arr, title):
 
 def output_header():
     d = datetime.date.today()
-    print("Onigmo (Oniguruma-mod) Unicode Properties  Version %s    %04d/%02d/%02d"
-            % (onig_ver, d.year, d.month, d.day))
+    print("Onigmo (Oniguruma-mod) Unicode Properties  Version {0!s}    {1:04d}/{2:02d}/{3:02d}".format(onig_ver, d.year, d.month, d.day))
 
     posix_brackets = [
         "Alpha", "Blank", "Cntrl", "Digit", "Graph", "Lower", "Print",
